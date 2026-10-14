@@ -24,11 +24,18 @@ function getColor(idx) {
   return TOKEN_COLORS[idx % TOKEN_COLORS.length];
 }
 
+/**
+ * Returns a visible representation of a token's text for display.
+ * Whitespace-only tokens get symbolic stand-ins so they're never invisible.
+ */
 function escapeDisplay(text) {
+  if (text === "" ) return null; // truly empty → fall through to hex
+  // Replace control/whitespace chars with visible symbols
   return text
-    .replace(/\n/g, "↵\n")
+    .replace(/\n/g, "↵")
     .replace(/\r/g, "↵")
-    .replace(/\t/g, "→");
+    .replace(/\t/g, "→")
+    .replace(/ /g, "·"); // middle dot for spaces so chip is never blank
 }
 
 export default function TokenViz({ tokens }) {
@@ -49,7 +56,13 @@ export default function TokenViz({ tokens }) {
       <div className="token-viz-content" aria-label="Token visualization">
         {tokens.map((token, i) => {
           const color = getColor(i);
-          const display = escapeDisplay(token.text || "");
+          // Only show hex fallback for genuinely non-printable bytes (no text at all)
+          const rawText = token.text || "";
+          const display = escapeDisplay(rawText);
+          // isNonPrintable: all bytes are control chars (< 32, not tab/newline/space)
+          const isNonPrintable =
+            display === null &&
+            token.bytes.every((b) => b < 32 && b !== 9 && b !== 10 && b !== 13);
           return (
             <span
               key={i}
@@ -62,10 +75,15 @@ export default function TokenViz({ tokens }) {
               }}
               title={`ID: ${token.id} | Bytes: [${token.bytes.join(", ")}]`}
             >
-              {display || (
-                <span style={{ opacity: 0.5, fontStyle: "italic" }}>
+              {display !== null ? (
+                display
+              ) : isNonPrintable ? (
+                <span style={{ opacity: 0.5, fontStyle: "italic", fontSize: "0.75em" }}>
                   {`\\x${token.bytes.map((b) => b.toString(16).padStart(2, "0")).join("")}`}
                 </span>
+              ) : (
+                // Fallback: show raw text (handles multi-byte sequences TextDecoder struggled with)
+                rawText || "·"
               )}
               <span className="token-chip-tooltip">
                 <div style={{ fontWeight: 600, marginBottom: 2 }}>
