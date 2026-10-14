@@ -1,0 +1,14 @@
+{
+  "__comment": "This is a placeholder model. Run 'python train_tokenizer.py' from the project root to generate the real trained model.",
+  "name": "basic_tokenizer",
+  "pattern": "",
+  "vocab_size": 258,
+  "merges": [
+    [32, 32, 256],
+    [101, 32, 257]
+  ],
+  "vocab": {
+    "256": [32, 32],
+    "257": [101, 32]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "__comment": "This is a placeholder model. Run 'python train_tokenizer.py' from the project root to generate the real trained model.",
+  "name": "regex_tokenizer",
+  "pattern": "'(?i:[sdmt]|ll|ve|re)|[^\\r\\n\\p{L}\\p{N}]?+\\p{L}+|\\p{N}{1,3}| ?[^\\s\\p{L}\\p{N}]++[\\r\\n]*|\\s*[\\r\\n]|\\s+(?!\\S)|\\s+",
+  "vocab_size": 258,
+  "merges": [
+    [32, 116, 256],
+    [116, 104, 257]
+  ],
+  "vocab": {
+    "256": [32, 116],
+    "257": [116, 104]
+  }
+}
