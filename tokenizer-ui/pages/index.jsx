@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Head from "next/head";
+import Link from "next/link";
 import TokenizerSelector from "../components/TokenizerSelector";
 import TokenViz from "../components/TokenViz";
 import StatsBar from "../components/StatsBar";
@@ -148,10 +149,10 @@ export default function Home() {
         {/* ── Header ── */}
         <header className="header">
           <div className="header-inner">
-            <a className="logo" href="/" aria-label="minbpe Tokenizer home">
+            <Link href="/" className="logo" aria-label="minbpe Tokenizer home">
               <div className="logo-icon" aria-hidden="true">⚡</div>
               <h1 className="logo-title">minbpe Tokenizer</h1>
-            </a>
+            </Link>
 
             <div className="header-right">
               <div className="model-badge" aria-label={`Active model: ${tokDef?.label}`}>
