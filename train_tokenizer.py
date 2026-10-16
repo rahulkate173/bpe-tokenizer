@@ -24,7 +24,7 @@ from minbpe.regex import RegexTokenizer
 
 DATASET_PATH = os.path.join(os.path.dirname(__file__), "tests", "taylorswift.txt")
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "tokenizer-ui", "public", "models")
-VOCAB_SIZE = 50255  # target vocabulary size
+VOCAB_SIZE = 5000  # target vocabulary size
 
 
 def load_text(path: str) -> str:
